@@ -164,7 +164,7 @@ def parseChord(text):
     return notes
     
 
-result = parseChord('(C E G Bb C)')
+result = parseChord('(C E G)')
 for item in result:
     print("Note object")
     print("pitch: ", item.pitch)
@@ -196,14 +196,20 @@ def getTriadQuality(chord_notes):
 		return "m"
 
 	if (pitch_base == [0, 4, 8]):
-		return "A"
+		return "+"
 
 	if (pitch_base == [0, 3, 6]):
-		return "d"
+		return "°"
 
 	return ""
 
 print(getTriadQuality(result))
 
+# given chord quality, return half-step counts of the notes to add
 
+# implement transposition given pitch list
+
+# write driver code:
+	# given string "(C E G) (G B D) etc....", call all necessary functions
+	# output new chords in same format
 
