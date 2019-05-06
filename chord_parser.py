@@ -164,10 +164,6 @@ def parseChord(text):
     return notes
     
 
-
-# In[54]:
-
-
 result = parseChord('(C E G Bb C)')
 for item in result:
     print("Note object")
@@ -182,8 +178,32 @@ for item in result:
 print(")")
 
 
-# In[ ]:
+def getTriadQuality(chord_notes):
 
+	pitch_only = []
+	for note in chord_notes:
+		pitch_only.append(note.pitch)
+
+	if (len(pitch_only) < 3):
+		return ""
+
+	pitch_base = pitch_only[0:3]
+
+	if (pitch_base == [0, 4, 7]):
+		return "M"
+
+	if (pitch_base == [0, 3, 7]):
+		return "m"
+
+	if (pitch_base == [0, 4, 8]):
+		return "A"
+
+	if (pitch_base == [0, 3, 6]):
+		return "d"
+
+	return ""
+
+print(getTriadQuality(result))
 
 
 
