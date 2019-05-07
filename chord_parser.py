@@ -4,8 +4,10 @@
 
 import copy
 import math
+import random
 import string
 
+random.seed()
 
 class Note:
     def __init__(self, note, octave):
@@ -94,7 +96,10 @@ def numToLetter(num, mode):
 
 
 def getRoleNum(note, tonic):
-    return (letterToNum(note) - letterToNum(tonic)) % 12
+	pitch = note
+	if (type(pitch) is 'str'):
+		pitch = letterToNum(note)
+	return (pitch - letterToNum(tonic)) % 12
 
 
 def getRoleLetter(note, tonic):
@@ -104,10 +109,10 @@ def getRoleLetter(note, tonic):
 
 
 def printChord(notes):
-	chord_string = '( '
+	chord_string = '('
 	for item in notes:
 		chord_string += (item.letter + str(item.octave) + " ")
-	chord_string += ')'
+	chord_string = chord_string[0:-1] + ')'
 	print(chord_string)
 
 
@@ -157,31 +162,39 @@ def getTriadQuality(chord_notes):
 def embellish(note_list, key):
 	quality = getTriadQuality(note_list)
 	root = note_list[0]
-	role = 9 # should be getting this from key
+	role = getRoleNum(root.pitch, key)
 
-	new_notes = []
+	new_pitches = []
 
 	if (quality is 'M'):
 
-		if (role is 7): # V chord
-			add1 = Note(root.pitch, root.octave)
-			add1.transpose(0, 1)
-			new_notes.append(add1)
+		if (role is 0): # I chord
+			new_pitches += [11]
 
-		# based on key
+		elif (role is 7): # V chord
+			new_pitches += [12]
+
 	elif (quality is 'm'):
 
-		if (role is 9): # vii chord
+		if (role is 0): # i chord
+			new_pitches += [10]
 
-			add1 = Note(root.pitch, root.octave)
-			add1.transpose(0, 1)
-			new_notes.append(add1)
+		elif (role is 9): # vii chord
 
-			add2 = Note(root.pitch, root.octave)
-			add2.transpose(4, 1)
-			new_notes.append(add2)
+			new_pitches += [12]
 
-	return note_list + new_notes
+		elif (role is 4): # iii chord
+
+			new_pitches += [12]
+
+	pitch_index = 0
+	while (round(random.random()) and pitch_index < len(new_pitches)):
+		add1 = Note(root.pitch, root.octave)
+		add1.transpose(new_pitches[pitch_index], 0)
+		note_list.append(add1)
+		pitch_index += 1
+
+	return note_list
 
 
 result = parseChord('(C Eb G)')
