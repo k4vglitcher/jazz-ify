@@ -138,8 +138,9 @@ def parseChord(text):
 def getTriadQuality(chord_notes):
 
 	pitch_only = []
+	root = chord_notes[0]
 	for note in chord_notes:
-		pitch_only.append(note.pitch)
+		pitch_only.append((note.pitch - root.pitch) % 12)
 
 	if (len(pitch_only) < 3):
 		return ""
@@ -168,30 +169,31 @@ def embellish(note_list, key):
 
 	new_pitches = []
 
+	key_shift = 7
+
 	if (quality is 'M'):
 
-		if (role is 0): # I chord
-			new_pitches += [11]
+		print("Major")
 
-		elif (role is 7): # V chord
-			new_pitches += [12]
+		if (role is 0 + key_shift): # I chord
+			new_pitches += [11, 14, 18, 21] # add M7, M9 (2), TTup, M13 (6)
+
+		elif (role is 5 + key_shift): # IV chord
+			new_pitches += [10, 14, 18, 21] # add m7, M9 (2), TTup, M13 (6), 
+
+		elif (role is 7 + key_shift): # V chord
+			new_pitches += [10, 14, 18, 21] # add m7, M9 (2), TTup, M13 (6) 
 
 	elif (quality is 'm'):
 
-		if (role is 0): # i chord
-			new_pitches += [10]
+		print("minor")
 
-		elif (role is 9): # vii chord
-
-			new_pitches += [12]
-
-		elif (role is 4): # iii chord
-
-			new_pitches += [12]
-
+		if (role is 0 + key_shift): # vi chord
+			new_pitches += [10, 14, 17, 21] # add m7, M9 (2), M11 (4), M13 (6)
+		
 	pitch_index = 0
 	while (round(random.random()) and pitch_index < len(new_pitches)):
-		add1 = Note(root.pitch, root.octave)
+		add1 = Note(root.pitch, root.octave + 1)
 		add1.transpose(new_pitches[pitch_index], 0)
 		note_list.append(add1)
 		pitch_index += 1
@@ -199,7 +201,7 @@ def embellish(note_list, key):
 	return note_list
 
 
-result = parseChord('(C Eb G)')
+result = parseChord('(G B D)')
 printChord(result)
 printChord(embellish(result, 'C'))
 
@@ -215,7 +217,7 @@ def main():
     print(array_of_chord)
     result = []
     for idx in array_of_chord:
-        result.append(parseChord(idx))
+        result.append(embellish(parseChord(idx), 'C'))
 
     #getQuality of each chord
 
