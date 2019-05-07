@@ -6,6 +6,8 @@ import copy
 import math
 import random
 import string
+from play_chord import init
+from play_chord import play_notes
 
 random.seed()
 
@@ -201,18 +203,10 @@ result = parseChord('(C Eb G)')
 printChord(result)
 printChord(embellish(result, 'C'))
 
-# given chord quality, return half-step counts of the notes to add
 
 # implement transposition given pitch list
 
-
 # transpose chord within getTriadQuality function
-
-
-# write driver code:
-	# given string "key of C - (C E G) (G B D) etc....", call all necessary functions
-	# output new chords in same format
-
 
 
 def main():
