@@ -13,7 +13,7 @@ random.seed()
 
 class Note:
     def __init__(self, note, octave):
-        if type(note) is 'str':
+        if type(note) is str:
             self.letter = note
             self.pitch = letterToNum(note)
         else:
@@ -98,10 +98,16 @@ def numToLetter(num, mode):
 
 
 def getRoleNum(note, tonic):
+
 	pitch = note
-	if (type(pitch) is 'str'):
+	if type(note) is str:
 		pitch = letterToNum(note)
-	return (pitch - letterToNum(tonic)) % 12
+
+	base = tonic
+	if type(tonic) is str:
+		base = letterToNum(tonic)
+
+	return (pitch - base) % 12
 
 
 def getRoleLetter(note, tonic):
@@ -167,34 +173,32 @@ def embellish(note_list, key):
 	root = note_list[0]
 	role = getRoleNum(root.pitch, key)
 
-	new_pitches = []
-
-	key_shift = 7
+	new_tones = []
 
 	if (quality is 'M'):
 
 		print("Major")
 
-		if (role is 0 + key_shift): # I chord
-			new_pitches += [11, 14, 18, 21] # add M7, M9 (2), TTup, M13 (6)
+		if (role is 0): # I chord
+			new_tones += [11, 14, 18, 21] # add M7, M9 (2), TTup, M13 (6)
 
-		elif (role is 5 + key_shift): # IV chord
-			new_pitches += [10, 14, 18, 21] # add m7, M9 (2), TTup, M13 (6), 
+		elif (role is 5): # IV chord
+			new_tones += [10, 14, 18, 21] # add m7, M9 (2), TTup, M13 (6), 
 
-		elif (role is 7 + key_shift): # V chord
-			new_pitches += [10, 14, 18, 21] # add m7, M9 (2), TTup, M13 (6) 
+		elif (role is 7): # V chord
+			new_tones += [10, 14, 18, 21] # add m7, M9 (2), TTup, M13 (6) 
 
 	elif (quality is 'm'):
 
 		print("minor")
 
-		if (role is 0 + key_shift): # vi chord
-			new_pitches += [10, 14, 17, 21] # add m7, M9 (2), M11 (4), M13 (6)
+		if (role is 0): # vi chord
+			new_tones += [10, 14, 17, 21] # add m7, M9 (2), M11 (4), M13 (6)
 		
 	pitch_index = 0
-	while (round(random.random()) and pitch_index < len(new_pitches)):
+	while (round(random.random()) and pitch_index < len(new_tones)):
 		add1 = Note(root.pitch, root.octave + 1)
-		add1.transpose(new_pitches[pitch_index], 0)
+		add1.transpose(new_tones[pitch_index], 0)
 		note_list.append(add1)
 		pitch_index += 1
 
@@ -203,12 +207,10 @@ def embellish(note_list, key):
 
 result = parseChord('(G B D)')
 printChord(result)
-printChord(embellish(result, 'C'))
+printChord(embellish(result, 'G'))
 
 
-# implement transposition given pitch list
-
-# transpose chord within getTriadQuality function
+# TODO implement transposition given pitch list
 
 
 def main():
@@ -217,7 +219,7 @@ def main():
     print(array_of_chord)
     result = []
     for idx in array_of_chord:
-        result.append(embellish(parseChord(idx), 'C'))
+        result.append(embellish(parseChord(idx), 'G'))
 
     #getQuality of each chord
 
