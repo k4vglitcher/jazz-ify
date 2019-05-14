@@ -10,6 +10,7 @@ from play_chord import init
 from play_chord import play_notes
 
 random.seed()
+global_mode = ''
 
 class Note:
     def __init__(self, note, octave):
@@ -18,7 +19,7 @@ class Note:
             self.pitch = letterToNum(note)
         else:
             self.pitch = note
-            self.letter = numToLetter(note, '')
+            self.letter = numToLetter(note, global_mode)
         self.octave = octave
         
     def transpose(self, steps, octs=0):
@@ -32,7 +33,7 @@ class Note:
 
         self.octave += octs
         self.pitch %= 12
-        self.letter = numToLetter(self.pitch, '')
+        self.letter = numToLetter(self.pitch, global_mode)
 
 
 def letterToNum(letter):
@@ -111,9 +112,9 @@ def getRoleNum(note, tonic):
 
 
 def getRoleLetter(note, tonic):
-    num = getRoleNum(note, tonic)
-    interval = ['P1', 'm2', 'M2', 'm3', 'M3', 'P4', 'TT', 'P5', 'm6', 'M6', 'm7', 'M7']
-    return interval[num]
+	num = getRoleNum(note, tonic)
+	interval = ['P1', 'm2', 'M2', 'm3', 'M3', 'P4', 'TT', 'P5', 'm6', 'M6', 'm7', 'M7']
+	return interval[num]
 
 
 def printChord(notes):
@@ -134,7 +135,7 @@ def parseChord(text):
         itemNum = letterToNum(itemLetter)
         
         # account for octave change
-        if (len(notes) > 0 and itemLetter < numToLetter(notes[-1].pitch, '')):
+        if (len(notes) > 0 and itemLetter < numToLetter(notes[-1].pitch, global_mode)):
             octave += 1
             
         notes.append(Note(itemNum, octave))
@@ -205,40 +206,53 @@ def embellish(note_list, key):
 	return note_list
 
 
-result = parseChord('(G B D)')
-printChord(result)
-printChord(embellish(result, 'G'))
-
-
-# TODO implement transposition given pitch list
-
+# result = parseChord('(G B D)')
+# printChord(result)
+# printChord(embellish(result, 'G'))
 
 def main():
+    print("Welcome!\n")
+    song_key = input("Please enter song key: ")
+    print("Your song will be in the key of " + song_key + ".\n")
+    sharp_keys = ['G', 'D', 'A', 'E', 'B']
+    flat_keys = ['F']
+    if ("b" in song_key):
+    	mode = 'b'
+    elif ("#" in song_key):
+    	mode = '#'
+    elif (song_key in flat_keys):
+    	mode = 'b'
+    elif (song_key in sharp_keys):
+    	mode = '#'
+
+    print("This program accepts root position triads in the following format:")
+    print("(note1 note2 note3)-(note4 note5 note6)-(note7 note8 note9)\n")
+    
     ins = input("Enter song chords: ")
     array_of_chord = ins.split("-")
     print(array_of_chord)
     result = []
     for idx in array_of_chord:
-        result.append(embellish(parseChord(idx), 'G'))
+        result.append(embellish(parseChord(idx), song_key))
 
     #getQuality of each chord
+    # print(result)
 
     quality = []
     for i in result:
         quality.append(getTriadQuality(i))
 
-    chords = []
-    for value in array_of_chord:
-        chords.append(value.replace(" ", ","))
+    for i in result:
+        printChord(i)
+    
+    # init()
 
-    print(chords)
-    init()
     #for chord in chords:
-    play_notes("C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 ")
+    # play_notes("C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 ")
 
-    play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
-    play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
-    play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
+    # play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
+    # play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
+    # play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
 
 if __name__ == "__main__":
     main()
