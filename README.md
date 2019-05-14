@@ -1,6 +1,7 @@
 # jazz-ify
 
 Developed by Lucie le Blanc and Julio Melchor
+
 Designed by Madelyn Baker and Ryan Daar
 
 ### Setup
@@ -29,5 +30,7 @@ To hear the notes being played, make sure sound is turned on. Different operatin
 ### Example
 
 Song: "Call Me Maybe" by Carly Rae Jepsen
+
 key of: `G`
+
 input: `(G B D)-(E G B)-(E G B)-(D F# A)`
