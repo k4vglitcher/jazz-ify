@@ -245,14 +245,14 @@ def main():
     for i in result:
         printChord(i)
     
-    # init()
+    init()
 
     #for chord in chords:
-    # play_notes("C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 ")
+    play_notes("C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 C,E,G:.4 ")
 
-    # play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
-    # play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
-    # play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
+    play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
+    play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
+    play_notes("F,A,C,F:3 C,E,G:1 G,B,G:.3 G,B,G:2 E,A,C:1 F,A,C,F:.3 F,A,C,F:2 C,E,G:1 G,B,G:.4 G,B,G:2")
 
 if __name__ == "__main__":
     main()
