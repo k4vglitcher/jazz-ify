@@ -1,18 +1,5 @@
 #!/usr/bin/python
 
-"""Demonstrate harmonic synthesis in Python using NumPy.
-
-Originally from:
-    http://osdir.com/ml/culture.people.kragen.hacks/2007-11/msg00000.html
-and https://mail.python.org/pipermail/tutor/2009-January/066173.html
-
-Unrelated, but also check out:
-play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4 \
-               delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1
-you can use # and b for sharps/flats, e.g. G#4 is a high G sharp.
-Check the SoX(1) man page for more fun examples.
-
-"""
 
 import pygame, pygame.sndarray
 import time, random
@@ -24,14 +11,6 @@ import termios, fcntl   # For non-blocking key reads
 sample_rate = 44100
 sampling = 4096    # or 16384
 
-# Notes = { "Ab" : 415.3, "A" : 440.0, "A#" : 466.16,
-#           "Bb" : 466.16, "B" : 493.88,
-#                          "C" : 523.25, "C#" : 554.37,
-#           "Db" : 554.37, "D" : 587.33, "D#" : 622.25,
-#           "Eb" : 622.25, "E" : 659.25,
-#                          "F" : 698.46, "F#" : 739.99,
-#           "Gb" : 739.99, "G" : 783.99, "G#" : 830.61
-#         }
 
 Notes = {
     "A"  : 220.000000,
@@ -125,9 +104,6 @@ def major_seventh(hz, waveform=None):
     return make_chord(hz, [8, 10, 12, 15], waveform)
 
 def play_for(sample_wave, ms):
-    """Play given samples, as a sound, for ms milliseconds."""
-    # In pygame 1.9.1, we can pass sample_wave directly,
-    # but in 1.9.2 they changed the mixer to only accept ints.
     sound = pygame.sndarray.make_sound(sample_wave)
     sound.play(-1)
     pygame.time.delay(ms)
@@ -141,11 +117,6 @@ def play_some_chords():
     play_for(sine_wave(440, 4096), length)
     pygame.time.delay(wait)
 
-    # print("Square")
-    # play_for(square_wave(440, 4096), length)
-    # pygame.time.delay(wait)
-    # print("Higher Square")
-    # play_for(square_wave(880, 4096), length)
 
     pygame.time.delay(wait)
     print("Triangle")
